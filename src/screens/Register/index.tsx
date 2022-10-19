@@ -4,24 +4,32 @@ import {
     Container,
     Header,
     Title,
-    Form
+    Form,
+    Fields
 } from "./styles";
 import { Input } from "../../components/Forms/Input";
+import { Button } from "../../components/Forms/Button";
 
 export function Register(){
     return(
         <Container>
+
             <Header>
                 <Title>Cadastro</Title>
             </Header>
+
             <Form>
-                <Input
-                    placeholder="Nome"
-                />
-                <Input
-                    placeholder="Preço"
-                />
+                <Fields>
+                    <Input
+                        placeholder="Nome"
+                    />
+                    <Input
+                        placeholder="Preço"
+                    />
+                </Fields>
+                <Button title="Enviar"/>
             </Form>
+
         </Container>
     );
 }
