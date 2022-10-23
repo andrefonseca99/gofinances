@@ -70,7 +70,7 @@ export function Dashboard(){
                             <UserName>André</UserName>
                         </User>
                     </UserInfo>
-                    <Icon name="power"/>
+                        <Icon name="power"/>
                 </UserWrapper>            
             </Header>
 

@@ -30,13 +30,13 @@ export function TransactionTypeButton({
             type={type}
             {...rest}
         >
-            <Icon
-                name={icons[type]}
-                type={type}
-            />
-            <Title>
-                { title }
-            </Title>
+                <Icon
+                    name={icons[type]}
+                    type={type}
+                />
+                <Title>
+                    { title }
+                </Title>
         </Container>
     );
 }
