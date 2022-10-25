@@ -4,6 +4,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { VictoryPie } from 'victory-native';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import { addMonths, format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 
 import { HistoryCard } from '../../components/HistoryCard';
 import {
@@ -37,8 +39,17 @@ interface CategoryData {
 }
 
 export function Resume(){
+    const [selectedDate, setSelectedDate] = useState(new Date());
     const [totalByCategories, setTotalByCategories] = useState<CategoryData[]>([]);
     const theme = useTheme();
+
+    function handleDateChange(action: 'next' | 'prev'){
+        if(action === 'next'){
+            setSelectedDate(addMonths(selectedDate, 1));
+        }else {
+            setSelectedDate(addMonths(selectedDate, -1));
+        }
+    }
 
     async function loadData(){
         const dataKey = "@gofinances:transactions";
@@ -46,7 +57,11 @@ export function Resume(){
         const responseFormatted = response ? JSON.parse(response) : [];
         
         const expenses = responseFormatted
-        .filter((expense: TransactionData) => expense.type === 'negative');
+        .filter((expense: TransactionData) => 
+        expense.type === 'negative' &&
+        new Date(expense.date).getMonth() === selectedDate.getMonth() &&
+        new Date(expense.date).getFullYear() === selectedDate.getFullYear()
+        );
 
         const expensesTotal = expenses
         .reduce((accumullator: number, expense: TransactionData) => {
@@ -89,7 +104,7 @@ export function Resume(){
 
     useEffect(() => {
         loadData();
-    }, []);
+    }, [selectedDate]);
 
     return(
         <Container>
@@ -109,13 +124,15 @@ export function Resume(){
             >
 
                 <MonthSelect>
-                    <MonthSelectButton>
+                    <MonthSelectButton onPress={() => handleDateChange('prev')}>
                         <MonthSelectIcon name="chevron-left"/>
                     </MonthSelectButton>
 
-                    <Month>Maio</Month>
+                    <Month>
+                        { format(selectedDate, 'MMMM, yyyy', {locale: ptBR}) }
+                    </Month>
 
-                    <MonthSelectButton>
+                    <MonthSelectButton onPress={() => handleDateChange('next')}>
                         <MonthSelectIcon name="chevron-right"/>
                     </MonthSelectButton>
 
