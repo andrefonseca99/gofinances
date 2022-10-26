@@ -1,5 +1,4 @@
 import styled from "styled-components/native";
-import { TouchableOpacityProps } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 
 export const Container = styled.TouchableOpacity`
