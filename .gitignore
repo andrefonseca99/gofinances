@@ -60,5 +60,4 @@ ios/
 .buckconfig
 babel.config.js
 yarn.lock
-
-
+.env
